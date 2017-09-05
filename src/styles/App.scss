@@ -1,3 +1,11 @@
+ @font-face {
+  font-family: 'iconfont';
+  src: url('../fonts/icons/turn-arrow.eot') format("embedded-opentype"), /* IE9 */
+  url('../fonts/icons/turn-arrow.woff') format('woff'), /* chrome、firefox */
+  url('../fonts/icons/turn-arrow.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */
+  url('../fonts/icons/turn-arrow.svg') format('svg'); /* iOS 4.1- */
+}
+
 html,
 body {
     width: 100%;
@@ -31,6 +39,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: #ddd;
+    perspective: 1800px;
     @at-root {
         .img-figure {
             position: absolute;
@@ -50,7 +59,7 @@ body {
                 height: 300px;
             }
             &.is-inverse {
-                transform: translate(320px) rotateY(180deg);
+                transform: translate(300px) rotateY(180deg);
             }
         }
         figcaption {
@@ -65,8 +74,8 @@ body {
                 top: 0;
                 left: 0;
                 // @include dis_whole;
-                width:100%;
-                height:100%;
+                width: 100%;
+                height: 100%;
                 padding: 50px 40px;
                 overflow: auto;
                 color: #a7a0a2;
@@ -76,9 +85,11 @@ body {
                 background-color: #fff;
                 box-sizing: border-box;
                 overflow: hidden;
+                word-wrap: break-word;
+                word-break: break-all;
                 /*先开始时.img-back，旋转了180度，因为translateZ(1px)，位于正面图像的下方*/
                 /*当.img-figure旋转时，.img-back又旋转了180度，旋转度数为360,因为translateZ(1px)，位于正面图像的上方*/
-                transform: rotateY(180deg) translateZ(1px);
+                transform: rotateY(180deg) translateZ(1px);/*translateZ(1px)用于处理safari文字旋转后显示的问题*/
             }
         }
     }
@@ -93,10 +104,44 @@ body {
 .controller-nav {
     position: absolute;
     left: 0;
-    bottom: 30px;
+    bottom: 100px;
     z-index: 101;
     width: 100%;
     text-align: center;
+    @at-root {
+        .controller-unit {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-color: #aaa;
+            border-radius: 50%;
+            transform: scale(.5);
+            transition: transform .6s ease-in-out, background-color .3s;
+            &.is-center {
+                background-color: #888;
+                transform: scale(1);
+                &::after {
+                    font-family: "iconfont";
+                    color:#fff;
+                    font-size: 80%;
+                    line-height: 30px;
+                    content: '\e600';
+                    /* 开启chrome字体的灰阶平滑 */
+                    -webkit-font-smoothing: antialiased;
+                    /* 开启firefox字体的灰阶平滑 */
+                    -moz-font-smoothing: grayscale;
+                }
+                &.is-inverse {
+                    background-color: #555;
+                    transform: rotateY(180deg);
+                }
+            }
+        }
+    }
 }
 
 
